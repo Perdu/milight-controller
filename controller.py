@@ -41,7 +41,7 @@ def main():
             cur_target = 4
         else:
             target_command = False
-        if cur_ip != last_ip and not target_command and cur_target_by_ip[last_ip] != cur_target_by_ip[cur_ip]:
+        if last_ip != None and cur_ip != last_ip and not target_command and cur_target_by_ip[last_ip] != cur_target_by_ip[cur_ip]:
             # We need to add a packet to target correct lamp
             t = cur_target_by_ip[cur_ip]
             if t == 0:
