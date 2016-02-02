@@ -36,7 +36,6 @@ def main():
         data, addr = s.recvfrom(10)
         command = data.encode("hex")
         cur_ip = addr[0]
-        print cur_ip, command
         target = command[0:2]
         target_command = True
         if target == "41" or target == "42":
@@ -64,7 +63,9 @@ def main():
                 new_command = "4900"
             elif t == 4:
                 new_command = "4b00"
+            print "Inserting: " + new_command
             send_packet(new_command.decode("hex"))
+        print cur_ip, command
         # Pass receive packet to bridge
         send_packet(data)
         last_ip = cur_ip
