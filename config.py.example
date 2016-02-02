@@ -4,3 +4,4 @@
 bridge_ip = "192.168.0.2"
 bridge_port = 8899
 socket_port = 8899
+own_ip = "192.168.0.3"

@@ -3,6 +3,7 @@
 
 import config
 import socket
+import threading
 
 def open_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -13,6 +14,14 @@ def send_packet(p):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(p, (config.bridge_ip, config.bridge_port))
 
+def simulate_bridge():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind(("", 48899))
+    while 1:
+        data, addr = s.recvfrom(1024)
+        if data == "Link_Wi-Fi":
+            s.sendto(own_ip + ",0000B00B0000" , addr)
+
 def main():
     # Which IP targets which lamp
     cur_target_by_ip = {}
@@ -21,6 +30,7 @@ def main():
     cur_target = None
     last_ip = None
     cur_ip = None
+    threading.Thread(target=simulate_bridge).start()
     s = open_socket()
     while 1:
         data, addr = s.recvfrom(10)
