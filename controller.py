@@ -20,7 +20,7 @@ def simulate_bridge():
     while 1:
         data, addr = sock.recvfrom(1024)
         if data == "Link_Wi-Fi":
-            sock.sendto(own_ip + ",0000B00B0000" , addr)
+            sock.sendto(config.own_ip + ",0000B00B0000" , addr)
 
 def main():
     # Which IP targets which lamp
