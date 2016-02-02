@@ -30,7 +30,9 @@ def main():
     cur_target = None
     last_ip = None
     cur_ip = None
-    threading.Thread(target=simulate_bridge).start()
+    t = threading.Thread(target=simulate_bridge)
+    t.daemon = True
+    t.start()
     s = open_socket()
     while 1:
         data, addr = s.recvfrom(10)
