@@ -1,6 +1,8 @@
 Milight controller
 =============
 
+A gateway script to control milight bulbs from multiple applications without conflicts.
+
 ## Why this script ##
 
 Milight lamps, also called LimitlessLED, Easybulb, Applight, Applamp, LEDme, dekolight or iLight, are smart bulbs.
@@ -13,5 +15,5 @@ The script has to be run on a server between your Milight controller application
 
 ## How to install ##
 
-Copy config.py.example to config.py and add the address of your Milight bridge as well as the IP address to which your server is joinable.
+Copy config.py.example to config.py and add the address of your Milight bridge as well as the IP address to which your server is joinable. On smartphone application, the script should appear as a new bridge with MAC address "00:00:B0:0B:00:00".
 Put this script on a server in your local network. Change the target IP from the bridge IP to your server IP in all your Milight controller applications.
