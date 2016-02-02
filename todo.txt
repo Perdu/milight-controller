@@ -1,0 +1,2 @@
+- Test TCP connection to bridge
+- Check whether mobile applications use TCP connections and add them if necessary
