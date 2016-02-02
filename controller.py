@@ -25,12 +25,12 @@ def simulate_bridge():
 def main():
     # Which IP targets which lamp
     cur_target_by_ip = {}
-    # Which lamp was targeted for the last time by this script
-    last_target = None
     cur_target = None
     last_ip = None
     cur_ip = None
-    threading.Thread(target=simulate_bridge).start()
+    t = threading.Thread(target=simulate_bridge)
+    t.daemon = True
+    t.start()
     s = open_socket()
     while 1:
         data, addr = s.recvfrom(10)
@@ -38,6 +38,7 @@ def main():
         cur_ip = addr[0]
         target = command[0:2]
         target_command = True
+        cur_target = None
         if target == "41" or target == "42":
             cur_target = 0 # all
         if target == "45" or target == "46":
@@ -50,7 +51,8 @@ def main():
             cur_target = 4
         else:
             target_command = False
-        if last_ip != None and cur_ip != last_ip and not target_command and cur_target_by_ip[last_ip] != cur_target_by_ip[cur_ip]:
+        #print last_ip, cur_ip, target_command, cur_target_by_ip
+        if last_ip != None and cur_ip != last_ip and not target_command and cur_ip in cur_target_by_ip and cur_target_by_ip[last_ip] != cur_target_by_ip[cur_ip]:
             # We need to add a packet to target correct lamp
             t = cur_target_by_ip[cur_ip]
             if t == 0:
@@ -68,9 +70,12 @@ def main():
         print cur_ip, command
         # Pass receive packet to bridge
         send_packet(data)
+        if cur_target != None:
+            cur_target_by_ip[cur_ip] = cur_target
+        elif cur_ip not in cur_target_by_ip:
+            # By default, send command to all lamps
+            cur_target_by_ip[cur_ip] = 0
         last_ip = cur_ip
-        last_target = cur_target
-        cur_target_by_ip[cur_ip] = cur_target
 
 if __name__=='__main__':
     main()
