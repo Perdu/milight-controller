@@ -11,8 +11,11 @@ def open_socket():
     return sock
 
 def send_packet(p):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.sendto(p, (config.bridge_ip, config.bridge_port))
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.sendto(p, (config.bridge_ip, config.bridge_port))
+    except socket.error:
+        print "Error sending packet to socket:", p
 
 def simulate_bridge():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
